@@ -1,5 +1,7 @@
 import { DashboardSidebar } from "@/components/sidebar-03/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { RequireAuth } from "@/services/auth/auth-provider";
+import { Providers } from "../providers";
 
 export default function AppLayout({
     children,
@@ -9,14 +11,18 @@ export default function AppLayout({
     return (
         <html lang="en">
             <body>
-                <SidebarProvider>
-                    <div className="relative flex h-screen w-full">
-                        <DashboardSidebar />
-                        <SidebarInset className="flex flex-col" />
-                    </div>
-                    {children}
-                </SidebarProvider>
-
+                <Providers>
+                    <RequireAuth>
+                        <SidebarProvider>
+                            <div className="relative flex h-screen w-full">
+                                <DashboardSidebar />
+                                <SidebarInset className="flex flex-col">
+                                    {children}
+                                </SidebarInset>
+                            </div>
+                        </SidebarProvider>
+                    </RequireAuth>
+                </Providers>
             </body>
         </html>
     );

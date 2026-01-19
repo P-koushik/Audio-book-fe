@@ -16,7 +16,7 @@ export default function AppLayout({
                         <SidebarProvider>
                             <div className="relative flex h-screen w-full">
                                 <DashboardSidebar />
-                                <SidebarInset className="flex flex-col">
+                                <SidebarInset className="rounded-l-md bg-[#FAFAFA] shadow-md border my-2">
                                     {children}
                                 </SidebarInset>
                             </div>

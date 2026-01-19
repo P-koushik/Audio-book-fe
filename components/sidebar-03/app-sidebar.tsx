@@ -42,7 +42,7 @@ export function DashboardSidebar() {
   const navUser = {
     name: user?.displayName || user?.email || "User",
     email: user?.email || "",
-    avatar: user?.photoURL || "/avatars/shadcn.jpg",
+    photoUrl: user?.photoURL || "/avatars/shadcn.jpg",
   };
 
   return (

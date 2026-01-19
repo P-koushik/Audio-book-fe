@@ -1,29 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  Pause,
-  Play,
-  SkipBack,
-  SkipForward,
-  Volume2,
-  Music,
-} from "lucide-react"
+import * as React from "react";
+import { Pause, Play, SkipBack, SkipForward, Volume2, Music } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 type AudioPlayerProps = {
-  title?: string
-  artist?: string
-  durationSeconds?: number
-  className?: string
-}
+  title?: string;
+  artist?: string;
+  durationSeconds?: number;
+  className?: string;
+};
 
 function formatTime(seconds: number) {
-  if (!Number.isFinite(seconds) || seconds < 0) return "0:00"
-  const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = Math.floor(seconds % 60)
-  return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
 }
 
 export default function Audioplayer({
@@ -32,39 +25,42 @@ export default function Audioplayer({
   durationSeconds = 6 * 60 + 12,
   className,
 }: AudioPlayerProps) {
-  const [isPlaying, setIsPlaying] = React.useState(false)
-  const [positionSeconds, setPositionSeconds] = React.useState(0)
-  const [volume, setVolume] = React.useState(80)
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [positionSeconds, setPositionSeconds] = React.useState(0);
+  const [volume, setVolume] = React.useState(80);
 
   const positionPercent =
-    durationSeconds > 0 ? (positionSeconds / durationSeconds) * 100 : 0
+    durationSeconds > 0 ? (positionSeconds / durationSeconds) * 100 : 0;
 
   return (
     <div
       className={cn(
-        // Layout: Full screen height, Flex Column, Centered horizontally
-        "w-full h-screen flex flex-col justify-between p-6 md:p-12 bg-background",
+        // ✅ important changes: h-full (not h-screen), smaller padding, no huge max widths
+        "h-full w-full bg-background p-4 md:p-6 flex flex-col gap-4",
         className
       )}
       aria-label="Audio player"
     >
-      {/* 1. Top/Middle Section: Album Art & Info */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-8 min-h-0">
-        {/* Album Art Placeholder */}
-        <div className="aspect-square w-full max-w-sm bg-muted rounded-2xl flex items-center justify-center shadow-sm">
-          <Music className="size-20 opacity-20" />
+      {/* Top/Middle: Art + Info */}
+      <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-4">
+        {/* Smaller album art to avoid layout shifting */}
+        <div className="aspect-square w-40 md:w-56 bg-muted rounded-2xl flex items-center justify-center shadow-sm">
+          <Music className="size-12 opacity-20" />
         </div>
 
         {/* Title & Artist */}
-        <div className="text-center space-y-2">
-          <div className="text-2xl font-bold truncate px-4">{title}</div>
-          <div className="text-lg opacity-70 truncate px-4">{artist}</div>
+        <div className="text-center space-y-1">
+          <div className="text-lg md:text-xl font-bold truncate max-w-[18rem]">
+            {title}
+          </div>
+          <div className="text-sm md:text-base opacity-70 truncate max-w-[18rem]">
+            {artist}
+          </div>
         </div>
       </div>
 
-      {/* 2. Bottom Section: Controls */}
-      <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto mt-8">
-        
+      {/* Bottom: Controls */}
+      <div className="flex flex-col gap-4">
         {/* Progress Bar */}
         <div className="flex flex-col gap-2">
           <input
@@ -95,10 +91,10 @@ export default function Audioplayer({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center size-15 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center size-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform"
             aria-label={isPlaying ? "Pause" : "Play"}
             aria-pressed={isPlaying}
-            onClick={() => setIsPlaying((value) => !value)}
+            onClick={() => setIsPlaying((v) => !v)}
           >
             {isPlaying ? (
               <Pause className="size-6 fill-current" />
@@ -117,7 +113,7 @@ export default function Audioplayer({
         </div>
 
         {/* Volume Control */}
-        <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="flex items-center justify-center gap-3">
           <Volume2 className="size-5 opacity-70" />
           <input
             id="audio-volume"
@@ -132,5 +128,5 @@ export default function Audioplayer({
         </div>
       </div>
     </div>
-  )
+  );
 }

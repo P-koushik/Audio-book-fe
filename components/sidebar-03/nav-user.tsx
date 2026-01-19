@@ -23,12 +23,14 @@ import { useRouter } from "next/navigation"
 
 export function NavUser({
   user,
+  onLogout,
 }: {
   user: {
     name: string
     email: string
     photoUrl: string
   }
+  onLogout: () => Promise<void>
 }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
@@ -76,7 +78,13 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => router.replace("/login")}
+              onClick={async () => {
+                try {
+                  await onLogout()
+                } finally {
+                  router.replace("/login")
+                }
+              }}
             >
               Log out
             </DropdownMenuItem>

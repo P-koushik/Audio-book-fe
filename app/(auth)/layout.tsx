@@ -1,3 +1,6 @@
+import { RedirectIfAuthed } from "@/services/auth/auth-provider";
+import { Providers } from "../providers";
+
 export default function Authlayout({
     children,
 }: Readonly<{
@@ -6,7 +9,9 @@ export default function Authlayout({
     return (
         <html lang="en">
             <body>
-                {children}
+                <Providers>
+                    <RedirectIfAuthed>{children}</RedirectIfAuthed>
+                </Providers>
             </body>
         </html>
     );

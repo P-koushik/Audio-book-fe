@@ -17,6 +17,7 @@ import {
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-03/nav-main";
 import { NavUser } from "./nav-user";
+import { useAuth } from "@/services/auth/auth-provider";
 
 const dashboardRoutes: Route[] = [
   {
@@ -33,17 +34,16 @@ const dashboardRoutes: Route[] = [
   },
 ];
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-}
-
 export function DashboardSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const { user } = useAuth();
+
+  const navUser = {
+    name: user?.displayName || user?.email || "User",
+    email: user?.email || "",
+    avatar: user?.photoURL || "/avatars/shadcn.jpg",
+  };
 
   return (
     <Sidebar variant="floating" collapsible="icon">
@@ -80,7 +80,7 @@ export function DashboardSidebar() {
         <DashboardNavigation routes={dashboardRoutes} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={navUser} />
       </SidebarFooter>
     </Sidebar>
   );

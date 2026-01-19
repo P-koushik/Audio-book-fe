@@ -17,6 +17,8 @@ import {
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-03/nav-main";
 import { NavUser } from "./nav-user";
+import { useAuth } from "@/providers/auth/auth-provider";
+
 
 const dashboardRoutes: Route[] = [
   {
@@ -36,11 +38,12 @@ const dashboardRoutes: Route[] = [
 export function DashboardSidebar() {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
+  const { user, logout } = useAuth();
 
   const navUser = {
-    name: "User",
-    email: "",
-    photoUrl: "/avatars/shadcn.jpg",
+    name: user?.displayName || user?.email || "User",
+    email: user?.email || "",
+    photoUrl: user?.photoURL || "/avatars/shadcn.jpg",
   };
 
   return (
@@ -78,7 +81,7 @@ export function DashboardSidebar() {
         <DashboardNavigation routes={dashboardRoutes} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={navUser} />
+        <NavUser user={navUser} onLogout={logout} />
       </SidebarFooter>
     </Sidebar>
   );

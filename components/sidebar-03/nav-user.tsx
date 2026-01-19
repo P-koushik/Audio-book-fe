@@ -21,8 +21,6 @@ import {
 } from "@/components/ui/sidebar"
 import { useRouter } from "next/navigation"
 
-import { useAuth } from "@/services/auth/auth-provider"
-
 export function NavUser({
   user,
 }: {
@@ -34,7 +32,6 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const router = useRouter()
-  const { signOut } = useAuth()
 
   return (
     <SidebarMenu>
@@ -79,10 +76,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={async () => {
-                await signOut()
-                router.replace("/login")
-              }}
+              onClick={() => router.replace("/login")}
             >
               Log out
             </DropdownMenuItem>

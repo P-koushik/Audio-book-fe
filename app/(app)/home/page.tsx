@@ -6,7 +6,7 @@ import { SidebarSeparator } from "@/components/ui/sidebar";
 
 export default function Dashboard() {
   return (
-    <div className="grid grid-cols-[1fr_2fr_1fr] gap-2 min-h-screen">
+    <div className="grid grid-cols-[1fr_2fr_1fr] gap-2 h-screen overflow-hidden">
         <Getallpdf />
         <Getpdfbyid />
         <Audioplayer />

@@ -95,7 +95,7 @@ export default function Audioplayer({
 
           <button
             type="button"
-            className="flex items-center justify-center size-13 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center size-15 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform"
             aria-label={isPlaying ? "Pause" : "Play"}
             aria-pressed={isPlaying}
             onClick={() => setIsPlaying((value) => !value)}

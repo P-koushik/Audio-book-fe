@@ -14,9 +14,9 @@ export default function AppLayout({
                 <Providers>
                     <RequireAuth>
                         <SidebarProvider>
-                            <div className="relative flex h-screen w-full">
+                            <div className="relative flex w-full">
                                 <DashboardSidebar />
-                                <SidebarInset className="rounded-l-md bg-[#FAFAFA] shadow-md border my-2">
+                                <SidebarInset className="rounded-l-md bg-[#FAFAFA] shadow-md border my-2 h-screen">
                                     {children}
                                 </SidebarInset>
                             </div>

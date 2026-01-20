@@ -17,7 +17,7 @@ import {
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-03/nav-main";
 import { NavUser } from "./nav-user";
-import { useAuth } from "@/providers/auth/auth-provider";
+import { useAuth } from "@/providers/auth-provider";
 
 
 const dashboardRoutes: Route[] = [

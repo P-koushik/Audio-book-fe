@@ -1,5 +1,6 @@
 import { DashboardSidebar } from "@/components/sidebar-03/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Panel, PanelProvider } from "@/components/ui/panel";
 
 export default function AppLayout({
     children,
@@ -10,7 +11,14 @@ export default function AppLayout({
         <SidebarProvider>
             <div className="relative flex h-screen w-full">
                 <DashboardSidebar />
-                <SidebarInset className="py-2 h-screen">{children}</SidebarInset>
+                <SidebarInset className="h-screen py-2 pr-2">
+                    <PanelProvider>
+                        <div className="flex h-full min-h-0 w-full">
+                            <div className="min-w-0 flex-1">{children}</div>
+                            <Panel />
+                        </div>
+                    </PanelProvider>
+                </SidebarInset>
             </div>
         </SidebarProvider>
     );

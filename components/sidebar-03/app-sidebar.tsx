@@ -26,13 +26,7 @@ const dashboardRoutes: Route[] = [
     title: "Home",
     icon: <Home className="size-4" />,
     link: "/home",
-  },
-  {
-    id: "Upload",
-    title: "Upload",
-    icon: <Package2 className="size-4" />,
-    link: "/upload",
-  },
+  }
 ];
 
 export function DashboardSidebar() {
@@ -59,7 +53,7 @@ export function DashboardSidebar() {
         <a href="#" className="flex items-center gap-2">
           {!isCollapsed && (
             <span className="font-semibold text-black dark:text-white">
-              Acme
+              Audio Book
             </span>
           )}
         </a>

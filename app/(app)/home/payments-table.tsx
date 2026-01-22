@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-"use client"
-
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import type { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
-
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
-
-=======
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +11,6 @@ export type Payment = {
   status: "pending" | "processing" | "success" | "failed";
   email: string;
 };
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
 
 export const columns: ColumnDef<Payment>[] = [
   {
@@ -35,12 +18,7 @@ export const columns: ColumnDef<Payment>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-<<<<<<< HEAD
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-=======
           table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -72,11 +50,7 @@ export const columns: ColumnDef<Payment>[] = [
           Email
           <ArrowUpDown />
         </Button>
-<<<<<<< HEAD
-      )
-=======
       );
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
@@ -84,18 +58,6 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "amount",
     header: () => <div className="text-center">Amount</div>,
     cell: ({ row }) => {
-<<<<<<< HEAD
-      const amount = parseFloat(row.getValue("amount"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-center font-medium">{formatted}</div>
-    },
-  },
-]
-=======
       const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -106,4 +68,3 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
 ];
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913

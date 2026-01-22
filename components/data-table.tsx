@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-"use client"
-
-import * as React from "react"
-=======
 "use client";
 
 import * as React from "react";
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
 import {
   flexRender,
   getCoreRowModel,
@@ -18,11 +12,7 @@ import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
-<<<<<<< HEAD
-} from "@tanstack/react-table"
-=======
 } from "@tanstack/react-table";
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
 
 import {
   Table,
@@ -31,26 +21,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-<<<<<<< HEAD
-} from "@/components/ui/table"
-
-type DataTableProps<TData, TValue> = {
-  data: TData[]
-  columns: ColumnDef<TData, TValue>[]
-}
-
-export function DataTable<TData, TValue>({
-  data,
-  columns,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
-=======
 } from "@/components/ui/table";
 
 type DataTableProps<TData, TValue> = {
@@ -63,7 +33,6 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
 
   const table = useReactTable({
     data,
@@ -82,11 +51,7 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
       columnVisibility,
       rowSelection,
     },
-<<<<<<< HEAD
-  })
-=======
   });
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
 
   return (
     <div className="w-full">
@@ -99,14 +64,7 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-<<<<<<< HEAD
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-=======
                       : flexRender(header.column.columnDef.header, header.getContext())}
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
                   </TableHead>
                 ))}
               </TableRow>
@@ -115,14 +73,7 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-<<<<<<< HEAD
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-=======
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -141,11 +92,5 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
         </Table>
       </div>
     </div>
-<<<<<<< HEAD
-  )
-}
-
-=======
   );
 }
->>>>>>> d2ca8fadbde81a3c5a8fbb5f0743a7b65d19c913

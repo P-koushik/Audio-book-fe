@@ -3,7 +3,6 @@ import "./globals.css";
 import { AuthProvider } from "@/providers/auth-provider";
 import { AppProvider } from "@/providers/app-provider";
 
-
 export const metadata: Metadata = {
   title: "Audio Book",
 };

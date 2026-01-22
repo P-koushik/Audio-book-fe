@@ -30,10 +30,10 @@ export default function Login05() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex min-h-screen items-center justify-center">
       <div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h3 className="mt-2 text-center text-lg font-bold text-foreground dark:text-foreground">
+          <h3 className="text-foreground dark:text-foreground mt-2 text-center text-lg font-bold">
             Create new account for AudioBook
           </h3>
         </div>
@@ -61,9 +61,7 @@ export default function Login05() {
                   }
                   redirectAfterAuth();
                 } catch (err) {
-                  setError(
-                    err instanceof Error ? err.message : "Failed to create account."
-                  );
+                  setError(err instanceof Error ? err.message : "Failed to create account.");
                 } finally {
                   setSubmitting(false);
                 }
@@ -72,7 +70,7 @@ export default function Login05() {
               <div>
                 <Label
                   htmlFor="name-login-05"
-                  className="text-sm font-medium text-foreground dark:text-foreground"
+                  className="text-foreground dark:text-foreground text-sm font-medium"
                 >
                   Name
                 </Label>
@@ -91,7 +89,7 @@ export default function Login05() {
               <div>
                 <Label
                   htmlFor="email-login-05"
-                  className="text-sm font-medium text-foreground dark:text-foreground"
+                  className="text-foreground dark:text-foreground text-sm font-medium"
                 >
                   Email
                 </Label>
@@ -110,7 +108,7 @@ export default function Login05() {
               <div>
                 <Label
                   htmlFor="password-login-05"
-                  className="text-sm font-medium text-foreground dark:text-foreground"
+                  className="text-foreground dark:text-foreground text-sm font-medium"
                 >
                   Password
                 </Label>
@@ -129,7 +127,7 @@ export default function Login05() {
               <div>
                 <Label
                   htmlFor="confirm-password-login-05"
-                  className="text-sm font-medium text-foreground dark:text-foreground"
+                  className="text-foreground dark:text-foreground text-sm font-medium"
                 >
                   Confirm password
                 </Label>
@@ -151,11 +149,7 @@ export default function Login05() {
                 </p>
               ) : null}
 
-              <Button
-                type="submit"
-                className="mt-4 w-full py-2 font-medium"
-                disabled={submitting}
-              >
+              <Button type="submit" className="mt-4 w-full py-2 font-medium" disabled={submitting}>
                 Create account
               </Button>
 
@@ -172,42 +166,31 @@ export default function Login05() {
                       await signInWithGooglePopup();
                       redirectAfterAuth();
                     } catch (e) {
-                      setError(
-                        e instanceof Error
-                          ? e.message
-                          : "Failed to sign up with Google."
-                      );
+                      setError(e instanceof Error ? e.message : "Failed to sign up with Google.");
                     } finally {
                       setSubmitting(false);
                     }
                   }}
                 >
                   <span className="flex items-center justify-center gap-2">
-                    <Image
-                      src={googleimage}
-                      alt="google image"
-                      width={15}
-                      height={20}
-                    />
-                    <span className="text-sm font-medium">
-                      Signup with Google
-                    </span>
+                    <Image src={googleimage} alt="google image" width={15} height={20} />
+                    <span className="text-sm font-medium">Signup with Google</span>
                   </span>
                 </Button>
               </div>
 
-              <p className="text-center text-xs text-muted-foreground dark:text-muted-foreground">
+              <p className="text-muted-foreground dark:text-muted-foreground text-center text-xs">
                 By signing in, you agree to our{" "}
                 <a
                   href="#"
-                  className="capitalize text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90"
+                  className="text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90 capitalize"
                 >
                   Terms of use
                 </a>{" "}
                 and{" "}
                 <a
                   href="#"
-                  className="capitalize text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90"
+                  className="text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90 capitalize"
                 >
                   Privacy policy
                 </a>
@@ -216,11 +199,11 @@ export default function Login05() {
           </CardContent>
         </Card>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground dark:text-muted-foreground">
+        <p className="text-muted-foreground dark:text-muted-foreground mt-6 text-center text-sm">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-medium text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90"
+            className="text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90 font-medium"
           >
             Sign in
           </Link>
@@ -229,4 +212,3 @@ export default function Login05() {
     </div>
   );
 }
-

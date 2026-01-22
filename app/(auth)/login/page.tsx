@@ -27,22 +27,20 @@ export default function Login04() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex min-h-screen items-center justify-center">
       <div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="flex items-center space-x-1.5">
-            <p className="font-medium text-lg text-foreground dark:text-foreground">
-              Acme
-            </p>
+            <p className="text-foreground dark:text-foreground text-lg font-medium">Acme</p>
           </div>
-          <h3 className="mt-6 text-lg font-semibold text-foreground dark:text-foreground">
+          <h3 className="text-foreground dark:text-foreground mt-6 text-lg font-semibold">
             Sign in to your account
           </h3>
-          <p className="mt-2 text-sm text-muted-foreground dark:text-muted-foreground">
+          <p className="text-muted-foreground dark:text-muted-foreground mt-2 text-sm">
             Don&apos;t have an account?{" "}
             <Link
               href="/signup"
-              className="font-medium text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90"
+              className="text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90 font-medium"
             >
               Sign up
             </Link>
@@ -68,12 +66,7 @@ export default function Login04() {
               }}
             >
               <span className="flex items-center justify-center gap-2">
-                <Image
-                  src={googleimage}
-                  alt="google image"
-                  width={15}
-                  height={20}
-                />
+                <Image src={googleimage} alt="google image" width={15} height={20} />
                 <span className="text-sm font-medium">Login with Google</span>
               </span>
             </Button>
@@ -84,7 +77,7 @@ export default function Login04() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">or</span>
+              <span className="bg-background text-muted-foreground px-2">or</span>
             </div>
           </div>
 
@@ -98,9 +91,7 @@ export default function Login04() {
                 await signInWithEmail(email, password);
                 redirectAfterAuth();
               } catch (err) {
-                setError(
-                  err instanceof Error ? err.message : "Failed to sign in."
-                );
+                setError(err instanceof Error ? err.message : "Failed to sign in.");
               } finally {
                 setSubmitting(false);
               }
@@ -109,7 +100,7 @@ export default function Login04() {
             <div>
               <Label
                 htmlFor="email-login-04"
-                className="text-sm font-medium text-foreground dark:text-foreground"
+                className="text-foreground dark:text-foreground text-sm font-medium"
               >
                 Email
               </Label>
@@ -127,7 +118,7 @@ export default function Login04() {
             <div>
               <Label
                 htmlFor="password-login-04"
-                className="text-sm font-medium text-foreground dark:text-foreground"
+                className="text-foreground dark:text-foreground text-sm font-medium"
               >
                 Password
               </Label>
@@ -149,21 +140,17 @@ export default function Login04() {
               </p>
             ) : null}
 
-            <Button
-              type="submit"
-              className="mt-4 w-full py-2 font-medium"
-              disabled={submitting}
-            >
+            <Button type="submit" className="mt-4 w-full py-2 font-medium" disabled={submitting}>
               Sign in
             </Button>
           </form>
 
-          <p className="mt-6 text-sm text-muted-foreground dark:text-muted-foreground">
+          <p className="text-muted-foreground dark:text-muted-foreground mt-6 text-sm">
             Forgot your password?{" "}
             <Button
               type="button"
               variant="link"
-              className="h-auto p-0 font-medium text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90"
+              className="text-primary hover:text-primary/90 dark:text-primary hover:dark:text-primary/90 h-auto p-0 font-medium"
               disabled={submitting}
               onClick={async () => {
                 if (!email) {
@@ -175,9 +162,7 @@ export default function Login04() {
                 try {
                   await sendPasswordReset(email);
                 } catch (e) {
-                  setError(
-                    e instanceof Error ? e.message : "Failed to send reset email."
-                  );
+                  setError(e instanceof Error ? e.message : "Failed to send reset email.");
                 } finally {
                   setSubmitting(false);
                 }

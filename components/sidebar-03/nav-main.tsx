@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   SidebarMenu,
   SidebarMenuButton,
@@ -48,9 +44,7 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
             {hasSubRoutes ? (
               <Collapsible
                 open={isOpen}
-                onOpenChange={(open) =>
-                  setOpenCollapsible(open ? route.id : null)
-                }
+                onOpenChange={(open) => setOpenCollapsible(open ? route.id : null)}
                 className="w-full"
               >
                 <CollapsibleTrigger asChild>
@@ -60,14 +54,12 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                       isOpen
                         ? "bg-sidebar-muted text-foreground"
                         : "text-muted-foreground hover:bg-sidebar-muted hover:text-foreground",
-                      isCollapsed && "justify-center"
+                      isCollapsed && "justify-center",
                     )}
                   >
                     {route.icon}
                     {!isCollapsed && (
-                      <span className="ml-2 flex-1 text-sm font-medium">
-                        {route.title}
-                      </span>
+                      <span className="ml-2 flex-1 text-sm font-medium">{route.title}</span>
                     )}
                     {!isCollapsed && hasSubRoutes && (
                       <span className="ml-auto">
@@ -93,7 +85,7 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                             <Link
                               href={subRoute.link}
                               prefetch={true}
-                              className="flex items-center rounded-md px-4 py-1.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-muted hover:text-foreground"
+                              className="text-muted-foreground hover:bg-sidebar-muted hover:text-foreground flex items-center rounded-md px-4 py-1.5 text-sm font-medium"
                             >
                               {subRoute.title}
                             </Link>
@@ -110,16 +102,12 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
                   href={route.link}
                   prefetch={true}
                   className={cn(
-                    "flex items-center rounded-lg px-2 transition-colors text-muted-foreground hover:bg-sidebar-muted hover:text-foreground",
-                    isCollapsed && "justify-center"
+                    "text-muted-foreground hover:bg-sidebar-muted hover:text-foreground flex items-center rounded-lg px-2 transition-colors",
+                    isCollapsed && "justify-center",
                   )}
                 >
                   {route.icon}
-                  {!isCollapsed && (
-                    <span className="ml-2 text-sm font-medium">
-                      {route.title}
-                    </span>
-                  )}
+                  {!isCollapsed && <span className="ml-2 text-sm font-medium">{route.title}</span>}
                 </Link>
               </SidebarMenuButton>
             )}

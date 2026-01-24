@@ -4,7 +4,6 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 
 import {
   User as FirebaseUser,
-  getIdToken,
   onAuthStateChanged,
   signOut as firebaseSignOut,
 } from "firebase/auth";
@@ -16,18 +15,17 @@ import { api } from "@/lib/api";
 import { auth } from "@/services/firebase";
 
 export type AuthUser = {
+  _id?: string;
+  firebase_uid?: string;
+  email?: string;
+  name?: string;
+  photo_url?: string;
+  // Back-compat (some components still expect Firebase-style fields)
   uid?: string;
-  email?: string | null;
   displayName?: string | null;
   photoURL?: string | null;
   [key: string]: unknown;
 } | null;
-
-type ApiResponse<T> = {
-  data?: T;
-  message?: string;
-  status_code?: number;
-};
 
 export type AuthContextType = {
   user: AuthUser;
@@ -41,12 +39,16 @@ const getAuthErrorMessage = (error: unknown) => {
   if (typeof error === "string") return error;
 
   if (error && typeof error === "object") {
-    if ("message" in error && typeof (error as any).message === "string") {
-      return (error as any).message;
+    const err = error as Record<string, unknown>;
+
+    if (typeof err.message === "string") {
+      return err.message;
     }
 
     const status =
-      (error as any)?.response?.status ?? (error as any)?.status ?? (error as any)?.status_code;
+      (err.response as Record<string, unknown> | undefined)?.status ??
+      err.status ??
+      err.status_code;
 
     if (typeof status === "number") return `Request failed (${status}).`;
   }
@@ -56,18 +58,26 @@ const getAuthErrorMessage = (error: unknown) => {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const mapFirebaseUserToAuthUser = (firebaseUser: FirebaseUser): Exclude<AuthUser, null> => {
+  return {
+    firebase_uid: firebaseUser.uid,
+    uid: firebaseUser.uid,
+    email: firebaseUser.email ?? undefined,
+    name: firebaseUser.displayName ?? firebaseUser.email ?? undefined,
+    displayName: firebaseUser.displayName,
+    photo_url: firebaseUser.photoURL ?? undefined,
+    photoURL: firebaseUser.photoURL,
+  };
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const [user, setUser] = useState<AuthUser>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Returns ONLY the payload (ApiResponse), not AxiosResponse
-  const fetchBackendUser = async (token: string): Promise<ApiResponse<AuthUser>> => {
-    const res = await api.get<ApiResponse<AuthUser>>("/auth/login", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return res.data;
+  const syncSigninWithBackend = async (): Promise<void> => {
+    await api.post("/signin");
   };
 
   const refreshUser = async () => {
@@ -78,14 +88,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
-      const token = await getIdToken(firebaseUser);
-      const payload = await fetchBackendUser(token);
+      setUser(mapFirebaseUserToAuthUser(firebaseUser));
 
-      if (!payload.status_code) {
-        setUser(payload.data ?? null);
-      } else {
-        setUser(null);
-      }
+      // Ensure the backend has the latest Firebase user info in DB
+      await syncSigninWithBackend();
     } catch (error) {
       console.error("[AuthProvider] Error refreshing user", error);
       toast.error(getAuthErrorMessage(error), { id: "auth-error" });
@@ -103,20 +109,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
 
-        const token = await getIdToken(firebaseUser);
-        if (!token) {
-          toast.error("Failed to get authentication token.", { id: "auth-error" });
-          setUser(null);
-          return;
-        }
+        setUser(mapFirebaseUserToAuthUser(firebaseUser));
 
-        const payload = await fetchBackendUser(token);
-
-        if (!payload.status_code) {
-          setUser(payload.data ?? null);
-        } else {
-          setUser(null);
-        }
+        // Sync user to backend DB (middleware will verify token + upsert user)
+        await syncSigninWithBackend();
       } catch (error) {
         console.error("[AuthProvider] Error fetching user", error);
         toast.error(getAuthErrorMessage(error), { id: "auth-error" });

@@ -186,7 +186,7 @@ export const Panel = ({
           <div className={cn("border-b p-2", headerClassName)}>{panel.header}</div>
         ) : (
           <div
-            className={cn("flex items-start justify-between gap-3 border-b p-2", headerClassName)}
+            className={cn("flex items-center justify-between gap-3 border-b p-2", headerClassName)}
           >
             <div className="min-w-0">
               {panel.title && <div className="truncate text-base font-semibold">{panel.title}</div>}
@@ -197,7 +197,9 @@ export const Panel = ({
               onClick={() => closePanel()}
               aria-label="Close panel"
               className="relative z-10"
-            ></Button>
+            >
+              <XIcon/>
+            </Button>
           </div>
         )}
 

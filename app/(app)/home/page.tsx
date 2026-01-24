@@ -9,8 +9,9 @@ import { usePanel } from "@/components/ui/panel";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Add02Icon } from "@hugeicons/core-free-icons";
 import { NativeSelect } from "@/components/ui/native-select";
-import { SearchInput } from "./search-input";
+import { SearchInput } from "../../../components/search-input";
 import { Pagination } from "@/components/ui/pagination";
+import FileUpload from "@/components/file-upload";
 
 const data: Payment[] = [
   {
@@ -59,24 +60,24 @@ export default function Home() {
       <header className="flex items-center gap-2 p-4">
         <div className="flex min-w-0 flex-1">
           <SearchInput
-            className="border-primary bg-primary text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-primary/30 h-9 rounded-md"
+            className="h-9 rounded-md"
             value={query}
             onValueChange={setQuery}
           />
         </div>
         <div className="shrink-0">
-          <NativeSelect className="border-primary bg-primary text-primary-foreground focus-visible:ring-primary/30 w-44 rounded-md" />
+          <NativeSelect className="w-44 rounded-md" />
         </div>
         <div className="shrink-0">
-          <NativeSelect className="border-primary bg-primary text-primary-foreground focus-visible:ring-primary/30 w-44 rounded-md" />
+          <NativeSelect className="w-44 rounded-md" />
         </div>
         <Button
-          size="icon"
+          size="sm"
           className="shrink-0 rounded-md"
           onClick={() =>
             openPanel({
-              title: "Panel",
-              content: "nothing",
+              title: "File upload",
+              content: <FileUpload/>,
             })
           }
         >

@@ -1,11 +1,15 @@
-"use client"
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
 import { useState } from "react";
 import { SearchInput } from "@/components/search-input";
 import { Play, Pause, RotateCcw, RotateCw } from "lucide-react";
+import { useGetPdfById } from "@/hooks/api/pdfs";
 
-export default function DetailsPage() {
+export default function DetailsPage({ params }: { params: { book: string } }) {
     const [clicked, setclicked] = useState(false)
+    const pdfQuery = useGetPdfById({ id: params.book });
+    const pdf = pdfQuery.data;
 
     return (
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
@@ -18,9 +22,25 @@ export default function DetailsPage() {
                         <SearchInput />
                     </div>
                     <div className="mx-2 flex-1 min-h-0 overflow-auto rounded-md border border-slate-200 bg-slate-50 shadow-md">
-                        <div className="flex h-full items-center justify-center text-slate-400">
-                            PDF Viewer Component Here
-                        </div>
+                        {pdfQuery.isLoading ? (
+                            <div className="flex h-full items-center justify-center text-slate-400">
+                                Loading PDF…
+                            </div>
+                        ) : pdfQuery.isError ? (
+                            <div className="flex h-full items-center justify-center text-slate-400">
+                                Failed to load PDF
+                            </div>
+                        ) : pdf?.originalPdfUrl ? (
+                            <iframe
+                                title={pdf.filename}
+                                src={pdf.originalPdfUrl}
+                                className="h-full w-full"
+                            />
+                        ) : (
+                            <div className="flex h-full items-center justify-center text-slate-400">
+                                PDF Viewer Component Here
+                            </div>
+                        )}
                     </div>
                 </div>
 

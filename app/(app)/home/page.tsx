@@ -3,57 +3,27 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
-import { columns, Payment } from "./payments-table";
 import { usePanel } from "@/components/ui/panel";
 
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Add02Icon } from "@hugeicons/core-free-icons";
 import { NativeSelect } from "@/components/ui/native-select";
 import { SearchInput } from "../../../components/search-input";
-import { Pagination } from "@/components/ui/pagination";
 import FileUpload from "@/components/file-upload";
-
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@example.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@example.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@example.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@example.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@example.com",
-  },
-];
+import { useGetAllPdfs } from "@/hooks/api/pdfs";
+import { pdfColumns } from "./pdf-columns";
 
 export default function Home() {
   const [query, setQuery] = React.useState("");
   const { openPanel } = usePanel();
+  const pdfsQuery = useGetAllPdfs();
+
   const filteredData = React.useMemo(() => {
+    const allPdfs = pdfsQuery.data ?? [];
     const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) return data;
-    return data.filter((payment) => payment.email.toLowerCase().includes(normalizedQuery));
-  }, [query]);
+    if (!normalizedQuery) return allPdfs;
+    return allPdfs.filter((pdf) => pdf.filename.toLowerCase().includes(normalizedQuery));
+  }, [pdfsQuery.data, query]);
 
   return (
     <div className="flex h-full min-w-0 flex-1 flex-col rounded-md border shadow-md">
@@ -77,7 +47,7 @@ export default function Home() {
           onClick={() =>
             openPanel({
               title: "File upload",
-              content: <FileUpload/>,
+              content: <FileUpload />,
             })
           }
         >
@@ -86,10 +56,16 @@ export default function Home() {
       </header>
 
       <div className="px-3">
-        <DataTable data={filteredData} columns={columns} />
+        {pdfsQuery.isLoading ? (
+          <div className="py-12 text-center text-sm text-muted-foreground">Loading files…</div>
+        ) : pdfsQuery.isError ? (
+          <div className="py-12 text-center text-sm text-destructive">
+            Failed to load files.
+          </div>
+        ) : (
+          <DataTable data={filteredData} columns={pdfColumns} />
+        )}
       </div>
-
-      <Pagination />
     </div>
   );
 }

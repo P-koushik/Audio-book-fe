@@ -14,8 +14,20 @@ export type Pdf = {
   originalPdfUrl: string;
   status: PdfStatus;
   audioUrl?: string;
+  pageCount?: number;
+  textChunkCount?: number;
+  textExtractedAt?: string;
+  textExtractionError?: string;
+  textChunks?: PdfTextChunk[];
   createdAt?: string;
   updatedAt?: string;
+};
+
+export type PdfTextChunk = {
+  pageNumber: number;
+  chunkIndex: number;
+  text: string;
+  charCount: number;
 };
 
 export type ApiResponse<T> = {
@@ -23,4 +35,3 @@ export type ApiResponse<T> = {
   data: T;
   [key: string]: unknown;
 };
-

@@ -41,7 +41,7 @@ export const pdfColumns: ColumnDef<Pdf>[] = [
     cell: ({ row }) => {
       const pdf = row.original;
       return (
-        <Link className="hover:underline" href={`/home/${pdf._id}`}>
+        <Link className="hover:underline" href={`/book/${pdf._id}`}>
           {pdf.filename}
         </Link>
       );

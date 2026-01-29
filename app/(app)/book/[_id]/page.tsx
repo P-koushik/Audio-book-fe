@@ -1,15 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import * as React from "react";
+import { useParams } from "next/navigation";
 import { SearchInput } from "@/components/search-input";
 import { Play, Pause, RotateCcw, RotateCw } from "lucide-react";
 import { useGetPdfById } from "@/hooks/api/pdfs";
 
-export default function DetailsPage({ params }: { params: { book: string } }) {
-    const [clicked, setclicked] = useState(false)
-    const pdfQuery = useGetPdfById({ id: params.book });
-    const pdf = pdfQuery.data;
+export default function DetailsPage() {
+    const [clicked, setclicked] = React.useState(false)
+    const params = useParams();
+    const id = params._id as string;
+    const [pdfText, loading, error] = useGetPdfById(id);
 
     return (
         <div className="flex h-full min-w-0 flex-col overflow-hidden">
@@ -22,23 +23,30 @@ export default function DetailsPage({ params }: { params: { book: string } }) {
                         <SearchInput />
                     </div>
                     <div className="mx-2 flex-1 min-h-0 overflow-auto rounded-md border border-slate-200 bg-slate-50 shadow-md">
-                        {pdfQuery.isLoading ? (
+                        {loading ? (
                             <div className="flex h-full items-center justify-center text-slate-400">
                                 Loading PDF…
                             </div>
-                        ) : pdfQuery.isError ? (
-                            <div className="flex h-full items-center justify-center text-slate-400">
-                                Failed to load PDF
+                        ) : error ? (
+                            <div className="flex h-full items-center justify-center text-sm text-destructive">
+                                Failed to load PDF.
                             </div>
-                        ) : pdf?.originalPdfUrl ? (
-                            <iframe
-                                title={pdf.filename}
-                                src={pdf.originalPdfUrl}
-                                className="h-full w-full"
-                            />
-                        ) : (
+                        ) : !pdfText?.text ? (
                             <div className="flex h-full items-center justify-center text-slate-400">
-                                PDF Viewer Component Here
+                                No text found yet.
+                            </div>
+                        ) : (
+                            <div className="p-4">
+                                <div className="rounded-md border border-slate-200 bg-white">
+                                    <div className="border-b border-slate-100 px-3 py-2 text-sm font-medium text-slate-700">
+                                        Text • {pdfText.pageCount} pages • {pdfText.chunkCount} chunks • {pdfText.charCount} chars
+                                    </div>
+                                    <div className="p-3">
+                                        <pre className="whitespace-pre-wrap text-sm text-slate-800">
+                                            {pdfText.text}
+                                        </pre>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

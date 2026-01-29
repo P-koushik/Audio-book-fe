@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/data-table";
 import { usePanel } from "@/components/ui/panel";
@@ -16,6 +17,7 @@ import { pdfColumns } from "./pdf-columns";
 export default function Home() {
   const [query, setQuery] = React.useState("");
   const { openPanel } = usePanel();
+  const router = useRouter();
   const pdfsQuery = useGetAllPdfs();
 
   const filteredData = React.useMemo(() => {
@@ -63,7 +65,11 @@ export default function Home() {
             Failed to load files.
           </div>
         ) : (
-          <DataTable data={filteredData} columns={pdfColumns} />
+          <DataTable
+            data={filteredData}
+            columns={pdfColumns}
+            onRowClick={(pdf) => router.push(`/book/${pdf._id}`)}
+          />
         )}
       </div>
     </div>

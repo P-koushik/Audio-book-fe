@@ -27,9 +27,17 @@ import {
 type DataTableProps<TData, TValue> = {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
+  onRowClick?: (row: TData) => void;
 };
 
-export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData, TValue>) {
+function isInteractiveElement(target: EventTarget | null) {
+  if (!(target instanceof Element)) return false;
+  return !!target.closest(
+    "a,button,input,select,textarea,label,[role='button'],[role='checkbox'],[role='menuitem']",
+  );
+}
+
+export function DataTable<TData, TValue>({ data, columns, onRowClick }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -74,7 +82,17 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className={onRowClick ? "cursor-pointer" : undefined}
+                  onClick={(e) => {
+                    if (!onRowClick) return;
+                    if (e.defaultPrevented) return;
+                    if (isInteractiveElement(e.target)) return;
+                    onRowClick(row.original);
+                  }}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

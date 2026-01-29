@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ExternalLink } from "lucide-react";
 
@@ -41,9 +40,7 @@ export const pdfColumns: ColumnDef<Pdf>[] = [
     cell: ({ row }) => {
       const pdf = row.original;
       return (
-        <Link className="hover:underline" href={`/book/${pdf._id}`}>
-          {pdf.filename}
-        </Link>
+        <p>{pdf.filename}</p>
       );
     },
   },
@@ -68,13 +65,11 @@ export const pdfColumns: ColumnDef<Pdf>[] = [
       const pdf = row.original;
       return (
         <div className="flex justify-end gap-2">
-          {pdf.originalPdfUrl ? (
-            <Button asChild size="sm" variant="secondary">
-              <a href={pdf.originalPdfUrl} target="_blank" rel="noreferrer">
-                <ExternalLink className="size-4" />
-              </a>
-            </Button>
-          ) : null}
+          <Button asChild size="sm" variant="secondary">
+            <a href={pdf.originalPdfUrl} target="_blank" rel="noreferrer">
+              <ExternalLink className="size-4" />
+            </a>
+          </Button>
         </div>
       );
     },

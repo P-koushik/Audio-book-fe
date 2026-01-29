@@ -30,6 +30,13 @@ export type PdfTextChunk = {
   charCount: number;
 };
 
+export type PdfUnifiedTextChunk = {
+  text: string;
+  charCount: number;
+  chunkCount: number;
+  pageCount: number;
+};
+
 export type ApiResponse<T> = {
   message?: string;
   data: T;

@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
-import type { ApiResponse, Pdf } from "@/types/pdf";
+import type { ApiResponse, Pdf, PdfUnifiedTextChunk } from "@/types/pdf";
 import type { TMutationOpts, TQueryOpts } from "@/types/tanstack";
 
 export type TGetAllPdfsArgs = {
@@ -12,11 +12,7 @@ export type TGetAllPdfsArgs = {
 
 export type TGetAllPdfsResult = Pdf[];
 
-export type TGetPdfByIdArgs = {
-  id: Pdf["_id"];
-};
-
-export type TGetPdfByIdResult = Pdf;
+export type TGetPdfByIdResult = PdfUnifiedTextChunk;
 
 export type TUploadPdfArgs = {
   file: File;
@@ -39,16 +35,26 @@ export const useGetAllPdfs = (args: TGetAllPdfsArgs = {}, options?: TQueryOpts<T
   });
 };
 
-export const useGetPdfById = (args: TGetPdfByIdArgs, options?: TQueryOpts<TGetPdfByIdResult>) => {
-  return useQuery({
-    queryKey: ["useGetPdfById", args],
+export const useGetPdfById = (id?: string, options?: TQueryOpts<TGetPdfByIdResult>) => {
+  const query = useQuery({
+    queryKey: ["useGetPdfById", id],
+    enabled: !!id,
     queryFn: async () => {
-      const res = await api.get<ApiResponse<TGetPdfByIdResult>>(`/${args.id}`);
+      if (!id) {
+        return {
+          text: "",
+          charCount: 0,
+          chunkCount: 0,
+          pageCount: 0,
+        };
+      }
+      const res = await api.get<ApiResponse<TGetPdfByIdResult>>(`/${id}`);
       return res.data;
     },
-    enabled: !!args?.id,
     ...options,
   });
+
+  return [query.data, query.isLoading, query.error] as const;
 };
 
 export const useUploadPdf = (options?: TMutationOpts<TUploadPdfArgs, TUploadPdfResult>) => {

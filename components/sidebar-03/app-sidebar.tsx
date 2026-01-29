@@ -21,7 +21,7 @@ const dashboardRoutes: Route[] = [
     id: "home",
     title: "Home",
     icon: <Home className="size-4" />,
-    link: "/home",
+    link: "/book",
   }
 ];
 

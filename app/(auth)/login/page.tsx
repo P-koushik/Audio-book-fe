@@ -23,7 +23,7 @@ export default function Login04() {
 
   const redirectAfterAuth = () => {
     const next = searchParams.get("next");
-    router.replace(next || "/home");
+    router.replace(next || "/book");
   };
 
   return (

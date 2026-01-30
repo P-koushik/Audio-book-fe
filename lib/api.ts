@@ -1,17 +1,29 @@
-import axios, { AxiosError, AxiosInstance } from "axios";
+import axios, { AxiosError, type AxiosInstance, type AxiosRequestConfig } from "axios";
 import { getIdToken } from "firebase/auth";
 
 import { env } from "@/constants/env";
 import { auth } from "@/services/firebase";
 
+type ApiClient = Omit<AxiosInstance, "get" | "post" | "put" | "patch" | "delete"> & {
+  get<T = unknown, D = unknown>(url: string, config?: AxiosRequestConfig<D>): Promise<T>;
+  delete<T = unknown, D = unknown>(url: string, config?: AxiosRequestConfig<D>): Promise<T>;
+  post<T = unknown, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<T>;
+  put<T = unknown, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<T>;
+  patch<T = unknown, D = unknown>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig<D>,
+  ): Promise<T>;
+};
+
 // Custom Axios instance with common configurations
-const api: AxiosInstance = axios.create({
+const api = axios.create({
   baseURL: env.backendUrl,
   headers: {
     "Content-Type": "application/json",
     "ngrok-skip-browser-warning": "true",
   },
-});
+}) as ApiClient;
 
 // Request interceptor to add authentication token
 api.interceptors.request.use(
@@ -47,3 +59,4 @@ api.interceptors.response.use(
 );
 
 export { api };
+export type { ApiClient };

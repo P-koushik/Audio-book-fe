@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import googleimage from "@/assets/logos/googleimage.png";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { updateProfile } from "firebase/auth";
 
@@ -16,7 +16,6 @@ import { signInWithGooglePopup } from "@/services/auth/google";
 
 export default function Login05() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,8 +24,7 @@ export default function Login05() {
   const [error, setError] = useState<string | null>(null);
 
   const redirectAfterAuth = () => {
-    const next = searchParams.get("next");
-    router.replace(next || "/home");
+    router.replace("/book");
   };
 
   return (

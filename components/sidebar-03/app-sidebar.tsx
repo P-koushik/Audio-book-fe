@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { Home, Package2 } from "lucide-react";
+import { Home } from "lucide-react";
 import type { Route } from "./nav-main";
 import DashboardNavigation from "@/components/sidebar-03/nav-main";
 import { NavUser } from "./nav-user";
@@ -21,7 +21,7 @@ const dashboardRoutes: Route[] = [
     id: "home",
     title: "Home",
     icon: <Home className="size-4" />,
-    link: "/home",
+    link: "/book",
   },
 ];
 
@@ -31,9 +31,9 @@ export function DashboardSidebar() {
   const { user, logout } = useAuth();
 
   const navUser = {
-    name: user?.displayName || user?.email || "User",
+    name: user?.name || user?.displayName || user?.email || "User",
     email: user?.email || "",
-    photoUrl: user?.photoURL || "/avatars/shadcn.jpg",
+    photoUrl: user?.photo_url || user?.photoURL || "/avatars/shadcn.jpg",
   };
 
   return (
@@ -48,9 +48,7 @@ export function DashboardSidebar() {
       >
         <a href="#" className="flex items-center gap-2">
           {!isCollapsed && (
-            <span className="font-semibold text-black dark:text-white">
-              Audio Book
-            </span>
+            <span className="text-sidebar-foreground font-semibold">Audio Book</span>
           )}
         </a>
 

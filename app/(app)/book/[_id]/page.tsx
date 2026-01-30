@@ -1,13 +1,15 @@
 "use client";
 
-import * as React from "react";
+
 import { useParams } from "next/navigation";
 import { SearchInput } from "@/components/search-input";
 import { Play, Pause, RotateCcw, RotateCw } from "lucide-react";
 import { useGetPdfById } from "@/hooks/api/pdfs";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function DetailsPage() {
-  const [clicked, setclicked] = React.useState(false);
+  const [clicked, setclicked] = useState(false);
   const params = useParams();
   const id = params._id as string;
   const [pdfText, loading, error] = useGetPdfById(id);
@@ -56,7 +58,7 @@ export default function DetailsPage() {
           {/* Top Row: Image Card */}
           <div className="flex items-center justify-center bg-slate-50 p-6">
             <div className="relative w-auto max-w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5">
-              <img
+              <Image
                 src="https://placehold.co/400x600/e2e8f0/475569?text=Cover+Art"
                 alt="Book Cover"
                 className="h-full w-full object-cover"

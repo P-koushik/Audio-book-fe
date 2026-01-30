@@ -198,7 +198,7 @@ export const Panel = ({
               aria-label="Close panel"
               className="relative z-10"
             >
-              <XIcon/>
+              <XIcon />
             </Button>
           </div>
         )}

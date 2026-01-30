@@ -39,9 +39,7 @@ export const pdfColumns: ColumnDef<Pdf>[] = [
     ),
     cell: ({ row }) => {
       const pdf = row.original;
-      return (
-        <p>{pdf.filename}</p>
-      );
+      return <p>{pdf.filename}</p>;
     },
   },
   {

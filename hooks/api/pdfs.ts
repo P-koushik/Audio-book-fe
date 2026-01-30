@@ -24,7 +24,10 @@ export type TUploadPdfResult = {
   data?: Pdf;
 };
 
-export const useGetAllPdfs = (args: TGetAllPdfsArgs = {}, options?: TQueryOpts<TGetAllPdfsResult>) => {
+export const useGetAllPdfs = (
+  args: TGetAllPdfsArgs = {},
+  options?: TQueryOpts<TGetAllPdfsResult>,
+) => {
   return useQuery({
     queryKey: ["useGetAllPdfs", args],
     queryFn: async () => {

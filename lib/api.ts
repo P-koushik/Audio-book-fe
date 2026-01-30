@@ -7,16 +7,8 @@ import { auth } from "@/services/firebase";
 type ApiClient = Omit<AxiosInstance, "get" | "post" | "put" | "patch" | "delete"> & {
   get<T = unknown, D = unknown>(url: string, config?: AxiosRequestConfig<D>): Promise<T>;
   delete<T = unknown, D = unknown>(url: string, config?: AxiosRequestConfig<D>): Promise<T>;
-  post<T = unknown, D = unknown>(
-    url: string,
-    data?: D,
-    config?: AxiosRequestConfig<D>,
-  ): Promise<T>;
-  put<T = unknown, D = unknown>(
-    url: string,
-    data?: D,
-    config?: AxiosRequestConfig<D>,
-  ): Promise<T>;
+  post<T = unknown, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<T>;
+  put<T = unknown, D = unknown>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<T>;
   patch<T = unknown, D = unknown>(
     url: string,
     data?: D,

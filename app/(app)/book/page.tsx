@@ -31,11 +31,7 @@ export default function Home() {
     <div className="flex h-full min-w-0 flex-1 flex-col rounded-md border shadow-md">
       <header className="flex items-center gap-2 p-4">
         <div className="flex min-w-0 flex-1">
-          <SearchInput
-            className="h-9 rounded-md"
-            value={query}
-            onValueChange={setQuery}
-          />
+          <SearchInput className="h-9 rounded-md" value={query} onValueChange={setQuery} />
         </div>
         <div className="shrink-0">
           <NativeSelect className="w-44 rounded-md" />
@@ -59,11 +55,9 @@ export default function Home() {
 
       <div className="px-3">
         {pdfsQuery.isLoading ? (
-          <div className="py-12 text-center text-sm text-muted-foreground">Loading files…</div>
+          <div className="text-muted-foreground py-12 text-center text-sm">Loading files…</div>
         ) : pdfsQuery.isError ? (
-          <div className="py-12 text-center text-sm text-destructive">
-            Failed to load files.
-          </div>
+          <div className="text-destructive py-12 text-center text-sm">Failed to load files.</div>
         ) : (
           <DataTable
             data={filteredData}

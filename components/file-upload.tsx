@@ -30,19 +30,19 @@ export default function FileUpload() {
   };
 
   return (
-    <div className="sm:mx-auto sm:max-w-lg flex items-center justify-center w-full max-w-lg">
+    <div className="flex w-full max-w-lg items-center justify-center sm:mx-auto sm:max-w-lg">
       <form onSubmit={handleSubmit}>
-        <div className="mt-4 flex justify-center space-x-4 rounded-md border border-dashed border-input px-6 py-10">
+        <div className="border-input mt-4 flex justify-center space-x-4 rounded-md border border-dashed px-6 py-10">
           <div className="sm:flex sm:items-center sm:gap-x-3">
             <Upload
-              className="mx-auto h-8 w-8 text-muted-foreground sm:mx-0 sm:h-6 sm:w-6"
+              className="text-muted-foreground mx-auto h-8 w-8 sm:mx-0 sm:h-6 sm:w-6"
               aria-hidden={true}
             />
-            <div className="mt-4 flex text-sm leading-6 text-foreground sm:mt-0">
+            <div className="text-foreground mt-4 flex text-sm leading-6 sm:mt-0">
               <p>Drag and drop or</p>
               <Label
                 htmlFor="file-upload-4"
-                className="relative cursor-pointer rounded-sm pl-1 font-medium text-primary hover:underline hover:underline-offset-4"
+                className="text-primary relative cursor-pointer rounded-sm pl-1 font-medium hover:underline hover:underline-offset-4"
               >
                 <span>choose file</span>
                 <input
@@ -58,17 +58,17 @@ export default function FileUpload() {
             </div>
           </div>
         </div>
-        <p className="mt-2 flex items-center justify-between text-xs leading-5 text-muted-foreground">
+        <p className="text-muted-foreground mt-2 flex items-center justify-between text-xs leading-5">
           Recommended max. size: 10 MB, Accepted file types: PDF.
         </p>
         {selectedFile && (
-          <div className="relative mt-8 rounded-lg bg-muted p-3">
+          <div className="bg-muted relative mt-8 rounded-lg p-3">
             <div className="absolute right-1 top-1">
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="rounded-sm p-2 text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground rounded-sm p-2"
                 aria-label="Remove"
                 onClick={() => setSelectedFile(null)}
               >
@@ -76,17 +76,12 @@ export default function FileUpload() {
               </Button>
             </div>
             <div className="flex items-center space-x-2.5">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-background shadow-sm ring-1 ring-inset ring-input">
-                <FileText
-                  className="size-5 text-foreground"
-                  aria-hidden={true}
-                />
+              <span className="bg-background ring-input flex h-10 w-10 shrink-0 items-center justify-center rounded-sm shadow-sm ring-1 ring-inset">
+                <FileText className="text-foreground size-5" aria-hidden={true} />
               </span>
               <div className="w-full">
-                <p className="text-xs font-medium text-foreground">
-                  {selectedFile.name}
-                </p>
-                <p className="mt-0.5 flex justify-between text-xs text-muted-foreground">
+                <p className="text-foreground text-xs font-medium">{selectedFile.name}</p>
+                <p className="text-muted-foreground mt-0.5 flex justify-between text-xs">
                   <span>{(selectedFile.size / 1024 / 1024).toFixed(1)} MB</span>
                   <span>Ready to upload</span>
                 </p>
@@ -98,7 +93,7 @@ export default function FileUpload() {
           <Button
             type="button"
             variant="outline"
-            className="whitespace-nowrap rounded-sm border border-input px-4 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-accent hover:text-foreground"
+            className="border-input text-foreground hover:bg-accent hover:text-foreground whitespace-nowrap rounded-sm border px-4 py-2 text-sm font-medium shadow-sm"
             onClick={() => setSelectedFile(null)}
           >
             Cancel
@@ -107,14 +102,12 @@ export default function FileUpload() {
             type="submit"
             variant="default"
             disabled={!selectedFile || uploadPdfMutation.isPending}
-            className="whitespace-nowrap rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 whitespace-nowrap rounded-sm px-4 py-2 text-sm font-medium shadow-sm"
           >
             {uploadPdfMutation.isPending ? "Uploading..." : "Upload"}
           </Button>
         </div>
-        {uploadPdfMutation.isError && (
-          <p className="mt-4 text-sm text-red-500">Upload failed</p>
-        )}
+        {uploadPdfMutation.isError && <p className="mt-4 text-sm text-red-500">Upload failed</p>}
       </form>
     </div>
   );

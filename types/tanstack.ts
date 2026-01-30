@@ -9,4 +9,3 @@ export type TMutationOpts<TArgs, TResult, TError = unknown> = Omit<
   UseMutationOptions<TResult, TError, TArgs, unknown>,
   "mutationKey" | "mutationFn"
 >;
-

@@ -22,7 +22,7 @@ const dashboardRoutes: Route[] = [
     title: "Home",
     icon: <Home className="size-4" />,
     link: "/book",
-  }
+  },
 ];
 
 export function DashboardSidebar() {

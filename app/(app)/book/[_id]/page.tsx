@@ -7,6 +7,7 @@ import { Play, Pause, RotateCcw, RotateCw } from "lucide-react";
 import { useGetPdfById } from "@/hooks/api/pdfs";
 import Image from "next/image";
 import { useState } from "react";
+import { Streamdown } from "streamdown";
 
 export default function DetailsPage() {
   const [clicked, setclicked] = useState(false);
@@ -39,12 +40,10 @@ export default function DetailsPage() {
             ) : (
               <div className="p-4">
                 <div className="rounded-md border border-slate-200 bg-white">
-                  <div className="border-b border-slate-100 px-3 py-2 text-sm font-medium text-slate-700">
-                    Text • {pdfText.pageCount} pages • {pdfText.chunkCount} chunks •{" "}
-                    {pdfText.charCount} chars
-                  </div>
                   <div className="p-3">
-                    <pre className="whitespace-pre-wrap text-sm text-slate-800">{pdfText.text}</pre>
+                    <Streamdown>
+                      {pdfText.text}
+                    </Streamdown>
                   </div>
                 </div>
               </div>
@@ -58,7 +57,7 @@ export default function DetailsPage() {
           {/* Top Row: Image Card */}
           <div className="flex items-center justify-center bg-slate-50 p-6">
             <div className="relative w-auto max-w-full overflow-hidden rounded-xl shadow-lg ring-1 ring-black/5">
-              <Image
+              <img
                 src="https://placehold.co/400x600/e2e8f0/475569?text=Cover+Art"
                 alt="Book Cover"
                 className="h-full w-full object-cover"
